@@ -1,0 +1,31 @@
+# Global options for arpwatch(8).
+
+# do not use the -i, -f or -u options here, they are added automatically
+# Debian: don't report bogons, don't use PROMISC.
+ARGS="-N -p -m carlosapariciodes@gmail.com"
+
+# if you want to add a pcap filter, uncomment and adjust the option below (you
+# will need spaces so adding -F to the ARGS above will cause problems). See -F
+# option in man 8 arpwatch for more information
+#PCAP_FILTER="not ether host (00:11:22:33:44:55 or 66:77:88:99:aa:bb)"
+
+# Debian: run as `arpwatch' user.  Empty this to run as root.
+RUNAS=""
+
+# when using systemd you have to enable arpwatch explicitly for each interface
+# you want to run it on by running:
+systemctl enable arpwatch@eth1
+systemctl start arpwatch@eth1
+systemctl enable arpwatch@eth2
+systemctl start arpwatch@eth2
+systemctl enable arpwatch@eth3
+systemctl start arpwatch@eth3
+systemctl enable arpwatch@lo
+systemctl start arpwatch@lo
+
+# For the LSB init script, enter a list of interfaces into the list below;
+# arpwatch will be started to listen on these interfaces.
+# Note: This is ignored when using systemd!
+# INTERFACES="eth0 eth1"
+INTERFACES="eth1 eth2 eth3 lo"
+
