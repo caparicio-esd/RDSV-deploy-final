@@ -77,11 +77,6 @@ $WAN_EXEC service openvswitch-switch start
 ## 3. En VNF:access agregar un bridge y sus vxlans
 echo "## 3. En VNF:access agregar un bridge y sus vxlan"
 $ACC_EXEC ovs-vsctl add-br brwan
-# REQ. 1 - Substitute brwan switches as OpenFlow switches
-$ACC_EXEC ovs-vsctl set bridge brwan protocols=OpenFlow10,OpenFlow12,OpenFlow13
-$ACC_EXEC ovs-vsctl set-fail-mode brwan secure
-$ACC_EXEC ovs-vsctl set bridge brwan other-config:datapath-id=0000000000000002
-$ACC_EXEC ovs-vsctl set-controller brwan tcp:$IPCTRL:6633
 $ACC_EXEC ip link add vxlan1 type vxlan id 1 remote $CUSTUNIP dstport 4789 dev net$NETNUM
 $ACC_EXEC ip link add axswan type vxlan id 3 remote $IPWAN dstport 4788 dev eth0
 $ACC_EXEC ovs-vsctl add-port brwan vxlan1

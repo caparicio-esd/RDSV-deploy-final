@@ -27,9 +27,15 @@ if [[ ! $VWAN =~ "sdedge-ns-repo-wanchart"  ]]; then
     echo "ERROR: incorrect <wan_deployment_id>: $VWAN"
     exit 1
 fi
+if [[ ! $VCTRL =~ "sdedge-ns-repo-ctrlchart"  ]]; then
+    echo ""       
+    echo "ERROR: incorrect <ctrl_deployment_id>: $VCTRL"
+    exit 1
+fi
 
 CPE_EXEC="$KUBECTL exec -n $OSMNS $VCPE --"
 WAN_EXEC="$KUBECTL exec -n $OSMNS $VWAN --"
+ACC_EXEC="$KUBECTL exec -n $OSMNS $VACC --"
 CTRL_EXEC="$KUBECTL exec -n $OSMNS $VCTRL --"
 WAN_SERV="${VWAN/deploy\//}"
 CTRL_SERV="${VCTRL/deploy\//}"
@@ -39,18 +45,19 @@ K8SGW="169.254.1.1"
 
 ## 1. Obtener IPs y puertos de las VNFs
 echo "## 1. Obtener IPs y puertos de las VNFs"
-IPACCESS=`$ACC_EXEC hostname -I | awk '{print $1}'`
-echo "IPACCESS = $IPACCESS"
+
 IPCPE=`$CPE_EXEC hostname -I | awk '{print $1}'`
 echo "IPCPE = $IPCPE"
 IPWAN=`$WAN_EXEC hostname -I | awk '{print $1}'`
 echo "IPWAN = $IPWAN"
 IPCTRL=`$CTRL_EXEC hostname -I | awk '{print $1}'`
 echo "IPCTRL = $IPCTRL"
-PORTWAN=`$KUBECTL get -n $OSMNS -o jsonpath="{.spec.ports[0].nodePort}" service $WAN_SERV`
-echo "PORTWAN = $PORTWAN"
+IPACC=`$ACC_EXEC hostname -I | awk '{print $1}'`
+echo "IPACC = $IPACC"
 PORTCTRL=`$KUBECTL get -n $OSMNS -o jsonpath="{.spec.ports[0].nodePort}" service $CTRL_SERV`
 echo "PORTCTRL = $PORTCTRL"
+PORTWAN=`$KUBECTL get -n $OSMNS -o jsonpath="{.spec.ports[0].nodePort}" service $WAN_SERV`
+echo "PORTWAN = $PORTWAN"
 
 
 # REQ 2. Add ctrl KNF
@@ -105,36 +112,31 @@ $WAN_EXEC ovs-vsctl add-port brwan cpewan
 $WAN_EXEC ifconfig cpewan up
 
 
-
-# Connect wan to 
-# $WAN_EXEC ip link add cpewan type vxlan id 5 remote $IPCPE dstport 8741 dev eth0
-# ????? Conseguir conectividad en todo...
-echo "## 7. a ver si puedo conectar con mpls"
-# $WAN_EXEC ovs-vsctl add-br voip
-# $WAN_EXEC ifconfig net$NETNUM $MPLSIN/24
-# $WAN_EXEC ip link add vxlan2 type vxlan id 2 remote $MPLSIPOUT  dev net$NETNUM
-# $WAN_EXEC ip link add axscpe type vxlan id 4 remote $IPWAN dev eth0
-# $WAN_EXEC ovs-vsctl add-port voip vxlan2
-# $WAN_EXEC ovs-vsctl add-port voip axscpe
-# $WAN_EXEC ifconfig vxlan2 up
-# $WAN_EXEC ifconfig axscpe up
-
-
-
-
-
-# ## 5. Aplica las reglas de la sdwan con ryu
-# REQ 2. Add ctrl KNF
+## 5. Aplica las reglas de la sdwan con ryu
 echo "## 5. Aplica las reglas de la sdwan con ryu"
-RYU_ADD_URL_CTRL="http://$IPCTRL:8080/stats/flowentry/add"
-curl -X POST -d @json/from-cpe.json $RYU_ADD_URL_CTRL
-curl -X POST -d @json/to-cpe.json $RYU_ADD_URL_CTRL
-curl -X POST -d @json/broadcast-from-axs.json $RYU_ADD_URL_CTRL
-curl -X POST -d @json/from-mpls.json $RYU_ADD_URL_CTRL
-curl -X POST -d @json/to-voip-gw.json $RYU_ADD_URL_CTRL
-curl -X POST -d @json/sdedge$NETNUM/to-voip.json $RYU_ADD_URL_CTRL
+RYU_ADD_URL="http://localhost:$PORTCTRL/stats/flowentry/add"
+curl -X POST -d @json/from-cpe.json $RYU_ADD_URL
+curl -X POST -d @json/to-cpe.json $RYU_ADD_URL
+curl -X POST -d @json/broadcast-from-axs.json $RYU_ADD_URL
+curl -X POST -d @json/from-mpls.json $RYU_ADD_URL
+curl -X POST -d @json/to-voip-gw.json $RYU_ADD_URL
+curl -X POST -d @json/sdedge$NETNUM/to-voip.json $RYU_ADD_URL
 
-# ## 6. Add QoS!!
-# REQ 4. Add QoS
+
+
+
+
+## 6. Aplica las reglas de QoS
+echo "## 6. Aplica las reglas de QoS"
+# $CTRL_EXEC chmod 666 /var/run/openvswitch/db.sock
+# sudo chmod 666 /var/run/openvswitch/db.sock
+# CONF_OVSDB="http://$IPCTRL:8080/v1.0/conf/switches/0000000000000003/ovsdb_addr"
 ACC_DPID=0000000000000003
-CONF_OVSDB="http://$IPCTRL:8080/v1.0/conf/switches/$ACC_DPID/ovsdb_addr"
+curl -X PUT -d '"tcp:127.0.0.1:6632"' http://$IPCTRL:8080/v1.0/conf/switches/$ACC_DPID/ovsdb_addr
+curl -X POST -d @json/to-voip-gw-qos.json http://$IPCTRL:8080/qos/rules/$ACC_DPID
+curl -X POST -d @json/qos-rules-b.json http://$IPCTRL:8080/qos/queue/$ACC_DPID
+
+
+echo "--"
+echo "sdedge$NETNUM: Abrir Firefox para ver sus flujos Openflow:"
+echo "firefox http://localhost:$PORTCTRL/home/ &"
