@@ -48,6 +48,7 @@ fi
 ACC_EXEC="$KUBECTL exec -n $OSMNS $VACC --"
 CPE_EXEC="$KUBECTL exec -n $OSMNS $VCPE --"
 WAN_EXEC="$KUBECTL exec -n $OSMNS $VWAN --"
+CTRL_EXEC="$KUBECTL exec -n $OSMNS $VCTRL --"
 
 # IP privada por defecto para el vCPE
 VCPEPRIVIP="192.168.255.254"
@@ -61,12 +62,13 @@ K8SGW="169.254.1.1"
 echo "## 1. Obtener IPs de las VNFs"
 IPACCESS=`$ACC_EXEC hostname -I | awk '{print $1}'`
 echo "IPACCESS = $IPACCESS"
-
 IPCPE=`$CPE_EXEC hostname -I | awk '{print $1}'`
 echo "IPCPE = $IPCPE"
-
 IPWAN=`$WAN_EXEC hostname -I | awk '{print $1}'`
 echo "IPWAN = $IPWAN"
+IPCTRL=`$CTRL_EXEC hostname -I | awk '{print $1}'`
+echo "IPCTRL = $IPCTRL"
+
 
 ## 2. Iniciar el Servicio OpenVirtualSwitch en wan VNF:
 echo "## 2. Iniciar el Servicio OpenVirtualSwitch en wan VNF"
@@ -79,7 +81,7 @@ $ACC_EXEC ovs-vsctl add-br brwan
 $ACC_EXEC ovs-vsctl set bridge brwan protocols=OpenFlow10,OpenFlow12,OpenFlow13
 $ACC_EXEC ovs-vsctl set-fail-mode brwan secure
 $ACC_EXEC ovs-vsctl set bridge brwan other-config:datapath-id=0000000000000002
-$ACC_EXEC ovs-vsctl set-controller brwan tcp:$IPWAN:6633
+$ACC_EXEC ovs-vsctl set-controller brwan tcp:$IPCTRL:6633
 $ACC_EXEC ip link add vxlan1 type vxlan id 1 remote $CUSTUNIP dstport 4789 dev net$NETNUM
 $ACC_EXEC ip link add axswan type vxlan id 3 remote $IPWAN dstport 4788 dev eth0
 $ACC_EXEC ovs-vsctl add-port brwan vxlan1

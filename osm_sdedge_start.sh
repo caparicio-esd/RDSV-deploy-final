@@ -30,10 +30,12 @@ echo "## 0. Obtener deployment ids de las vnfs"
 OSMACC=$(deployment_id $SIID "access")
 OSMCPE=$(deployment_id $SIID "cpe")
 OSMWAN=$(deployment_id $SIID "wan")
+OSMCTRL=$(deployment_id $SIID "ctrl")
 
 export VACC="deploy/$OSMACC"
 export VCPE="deploy/$OSMCPE"
 export VWAN="deploy/$OSMWAN"
+export VCTRL="deploy/$OSMWAN"
 
 
 ./start_corpcpe.sh

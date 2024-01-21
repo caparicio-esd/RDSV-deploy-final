@@ -39,6 +39,8 @@ K8SGW="169.254.1.1"
 
 ## 1. Obtener IPs y puertos de las VNFs
 echo "## 1. Obtener IPs y puertos de las VNFs"
+IPACCESS=`$ACC_EXEC hostname -I | awk '{print $1}'`
+echo "IPACCESS = $IPACCESS"
 IPCPE=`$CPE_EXEC hostname -I | awk '{print $1}'`
 echo "IPCPE = $IPCPE"
 IPWAN=`$WAN_EXEC hostname -I | awk '{print $1}'`
@@ -66,9 +68,9 @@ $CTRL_EXEC /usr/local/bin/ryu-manager /root/flowmanager/flowmanager.py ryu.app.r
 ## 3. En VNF:cpe agregar un bridge y sus vxlan - y añadir bridge openflow - y puntero a controlador
 echo "## 2. En VNF:cpe agregar un bridge y configurar IPs y rutas"
 $CPE_EXEC ip route add $IPWAN/32 via $K8SGW
-$CPE_EXEC ovs-vsctl add-br brwan
 
 # REQ 2. Add ctrl KNF
+$CPE_EXEC ovs-vsctl add-br brwan
 $CPE_EXEC ovs-vsctl set bridge brwan protocols=OpenFlow10,OpenFlow12,OpenFlow13
 $CPE_EXEC ovs-vsctl set-fail-mode brwan secure
 $CPE_EXEC ovs-vsctl set bridge brwan other-config:datapath-id=0000000000000002
@@ -108,14 +110,14 @@ $WAN_EXEC ifconfig cpewan up
 # $WAN_EXEC ip link add cpewan type vxlan id 5 remote $IPCPE dstport 8741 dev eth0
 # ????? Conseguir conectividad en todo...
 echo "## 7. a ver si puedo conectar con mpls"
-$WAN_EXEC ovs-vsctl add-br voip
-$WAN_EXEC ifconfig net$NETNUM $MPLSIN/24
-$WAN_EXEC ip link add vxlan2 type vxlan id 2 remote $MPLSIPOUT  dev net$NETNUM
-$WAN_EXEC ip link add axscpe type vxlan id 4 remote $IPWAN dev eth0
-$WAN_EXEC ovs-vsctl add-port voip vxlan2
-$WAN_EXEC ovs-vsctl add-port voip axscpe
-$WAN_EXEC ifconfig vxlan2 up
-$WAN_EXEC ifconfig axscpe up
+# $WAN_EXEC ovs-vsctl add-br voip
+# $WAN_EXEC ifconfig net$NETNUM $MPLSIN/24
+# $WAN_EXEC ip link add vxlan2 type vxlan id 2 remote $MPLSIPOUT  dev net$NETNUM
+# $WAN_EXEC ip link add axscpe type vxlan id 4 remote $IPWAN dev eth0
+# $WAN_EXEC ovs-vsctl add-port voip vxlan2
+# $WAN_EXEC ovs-vsctl add-port voip axscpe
+# $WAN_EXEC ifconfig vxlan2 up
+# $WAN_EXEC ifconfig axscpe up
 
 
 
@@ -132,12 +134,7 @@ curl -X POST -d @json/from-mpls.json $RYU_ADD_URL_CTRL
 curl -X POST -d @json/to-voip-gw.json $RYU_ADD_URL_CTRL
 curl -X POST -d @json/sdedge$NETNUM/to-voip.json $RYU_ADD_URL_CTRL
 
-
-
 # ## 6. Add QoS!!
 # REQ 4. Add QoS
 ACC_DPID=0000000000000003
 CONF_OVSDB="http://$IPCTRL:8080/v1.0/conf/switches/$ACC_DPID/ovsdb_addr"
-curl -X PUT -d "\"tcp:$IPACC:6632\"" $CONF_OVSDB
-curl -X POST -d @json_qos/to_voipgw.json http://$IPCTRL:8080/qos/rules/$ACC_DPID
-curl -X POST -d @json_qos/qos.json http://$IPCTRL:8080/qos/queue/$ACC_DPID
