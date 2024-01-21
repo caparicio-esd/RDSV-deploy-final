@@ -123,10 +123,6 @@ Changelog: Editado por Carlos Aparicio, Manfredonio Nguema, Enzo Banchon
 
     <!-- add arpwatch info -->
     <exec seq="on_boot" type="verbatim">
-       # arpwatch install
-       apt-get update
-       apt-get install arpwatch -y
-
        # arpwatch
        arpwatch -i eth1 -m carlosapariciodes@gmail.com
        arpwatch -i eth2 -m carlosapariciodes@gmail.com
@@ -155,10 +151,6 @@ Changelog: Editado por Carlos Aparicio, Manfredonio Nguema, Enzo Banchon
 
     <!-- add arpwatch info -->
     <exec seq="on_boot" type="verbatim">
-       # arpwatch install
-       apt-get update
-       apt-get install arpwatch -y
-
        # arpwatch
        arpwatch -i eth1 -m carlosapariciodes@gmail.com
        arpwatch -i eth2 -m carlosapariciodes@gmail.com

@@ -1,32 +1,35 @@
+loading app /root/flowmanager/flowmanager.py
 loading app ryu.app.rest_conf_switch
 loading app ryu.app.ofctl_rest
 loading app ryu.app.rest_qos
-loading app qos_simple_switch_13.py
+loading app /root/qos_simple_switch_13.py
+loading app ryu.topology.switches
 loading app ryu.controller.ofp_handler
 instantiating app None of DPSet
 creating context dpset
+creating context wsgi
 instantiating app None of ConfSwitchSet
 creating context conf_switch
-creating context wsgi
 instantiating app ryu.app.rest_conf_switch of ConfSwitchAPI
-instantiating app ryu.app.ofctl_rest of RestStatsApi
-instantiating app qos_simple_switch_13.py of SimpleSwitch13
 instantiating app ryu.controller.ofp_handler of OFPHandler
 instantiating app ryu.app.rest_qos of RestQoSAPI
-Traceback (most recent call last):
-  File "/usr/local/bin/ryu-manager", line 9, in <module>
-    load_entry_point('ryu==4.31', 'console_scripts', 'ryu-manager')()
-  File "/usr/local/lib/python2.7/dist-packages/ryu/cmd/manager.py", line 103, in main
-    webapp = wsgi.start_service(app_mgr)
-  File "/usr/local/lib/python2.7/dist-packages/ryu/app/wsgi.py", line 334, in start_service
-    return WSGIServer(instance)
-  File "/usr/local/lib/python2.7/dist-packages/ryu/app/wsgi.py", line 325, in __init__
-    application, **config)
-  File "/usr/local/lib/python2.7/dist-packages/ryu/lib/hub.py", line 127, in __init__
-    self.server = eventlet.listen(listen_info)
-  File "/usr/lib/python2.7/dist-packages/eventlet/convenience.py", line 43, in listen
-    sock.bind(addr)
-  File "/usr/lib/python2.7/socket.py", line 228, in meth
-    return getattr(self._sock,name)(*args)
-socket.error: [Errno 98] Address already in use
-command terminated with exit code 1
+instantiating app /root/qos_simple_switch_13.py of SimpleSwitch13
+instantiating app /root/flowmanager/flowmanager.py of FlowManager
+Created flowmanager
+instantiating app ryu.app.ofctl_rest of RestStatsApi
+instantiating app ryu.topology.switches of Switches
+(79) wsgi starting up on http://0.0.0.0:8080
+[QoS][INFO] dpid=0000000000000002: Join qos switch.
+[QoS][INFO] dpid=0000000000000001: Join qos switch.
+(79) accepted ('10.0.1.1', 46452)
+10.0.1.1 - - [21/Jan/2024 14:53:00] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.007272
+(79) accepted ('10.0.1.1', 46456)
+10.0.1.1 - - [21/Jan/2024 14:53:00] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.000308
+(79) accepted ('10.0.1.1', 46464)
+10.0.1.1 - - [21/Jan/2024 14:53:00] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.000377
+(79) accepted ('10.0.1.1', 46474)
+10.0.1.1 - - [21/Jan/2024 14:53:00] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.000272
+(79) accepted ('10.0.1.1', 46486)
+10.0.1.1 - - [21/Jan/2024 14:53:00] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.000320
+(79) accepted ('10.0.1.1', 46490)
+10.0.1.1 - - [21/Jan/2024 14:53:00] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.000370
