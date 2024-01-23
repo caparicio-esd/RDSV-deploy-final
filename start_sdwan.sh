@@ -64,12 +64,19 @@ echo "PORTWAN = $PORTWAN"
 # 2. Config KNF Ctrl
 echo "## 6. Configuramos red en nueva KNF CTRL, y levantamos controlador ryu"
 # p2.1 p.6 (instantiation of ryu-manager)
-# ???? preguntar que pasa cuando dos servicios tienen el 8080, 
 # no veo manera de editar puertos ni en flow manager ni en rest_conf_switch....
 # luego en el service de kubernetes lo hubiera expuesto...
 $CTRL_EXEC service openvswitch-switch start
-$CTRL_EXEC /usr/local/bin/ryu-manager /root/flowmanager/flowmanager.py ryu.app.rest_conf_switch ryu.app.ofctl_rest ryu.app.rest_qos /root/qos_simple_switch_13.py 2>&1 | tee logs/ryu.log &
+$CTRL_EXEC /usr/local/bin/ryu-manager flowmanager/flowmanager.py ryu.app.rest_conf_switch ryu.app.ofctl_rest ryu.app.rest_qos qos_simple_switch_13.py 2>&1 | tee logs/ryu.log &
 
+
+# REQ. 1 - Substitute brwan switches as OpenFlow switches - esta hecho en sdwan
+# aquí estaba el problema de conectividad
+$ACC_EXEC ovs-vsctl set bridge brwan protocols=OpenFlow10,OpenFlow12,OpenFlow13
+$ACC_EXEC ovs-vsctl set-fail-mode brwan secure
+$ACC_EXEC ovs-vsctl set bridge brwan other-config:datapath-id=0000000000000003
+$ACC_EXEC ovs-vsctl set-controller brwan tcp:$IPCTRL:6633
+$ACC_EXEC ovs-vsctl set-manager ptcp:6632
 
 
 ## 3. En VNF:cpe agregar un bridge y sus vxlan - y añadir bridge openflow - y puntero a controlador
@@ -78,11 +85,12 @@ $CPE_EXEC ip route add $IPWAN/32 via $K8SGW
 
 # REQ 2. Add ctrl KNF
 $CPE_EXEC ovs-vsctl add-br brwan
+# REQ. 1 - Substitute brwan switches as OpenFlow switches - esta hecho en sdwan
 $CPE_EXEC ovs-vsctl set bridge brwan protocols=OpenFlow10,OpenFlow12,OpenFlow13
 $CPE_EXEC ovs-vsctl set-fail-mode brwan secure
 $CPE_EXEC ovs-vsctl set bridge brwan other-config:datapath-id=0000000000000002
 $CPE_EXEC ovs-vsctl set-controller brwan tcp:$IPCTRL:6633
-
+$CPE_EXEC ovs-vsctl set-manager ptcp:6632
 $CPE_EXEC ip link add cpewan type vxlan id 5 remote $IPWAN dstport 8741 dev eth0
 $CPE_EXEC ovs-vsctl add-port brwan cpewan
 $CPE_EXEC ifconfig cpewan up
@@ -92,7 +100,7 @@ $CPE_EXEC ifconfig sr1sr2 up
 
 
 
-# # 4. En VNF:wan arrancar controlador SDN" - no se necesita - ahora va a CTRL
+# # x. En VNF:wan arrancar controlador SDN" - no se necesita - ahora va a CTRL
 # echo "## 3. En VNF:wan arrancar controlador SDN"
 # $WAN_EXEC /usr/local/bin/ryu-manager --verbose flowmanager/flowmanager.py ryu.app.ofctl_rest 2>&1 | tee ryu.log &
 # $WAN_EXEC /usr/local/bin/ryu-manager ryu.app.simple_switch_13 ryu.app.ofctl_rest 2>&1 | tee ryu.log &
@@ -101,12 +109,13 @@ $CPE_EXEC ifconfig sr1sr2 up
 
 
 ## 4. En VNF:wan activar el modo SDN del conmutador y crear vxlan
-# REQ. 1 - Substitute brwan switches as OpenFlow switches - esta hecho en sdwan
+# REQ. 1 - Substitute brwan switches as OpenFlow switches
 echo "## 4. En VNF:wan activar el modo SDN del conmutador y crear vxlan"
 $WAN_EXEC ovs-vsctl set bridge brwan protocols=OpenFlow10,OpenFlow12,OpenFlow13
 $WAN_EXEC ovs-vsctl set-fail-mode brwan secure
 $WAN_EXEC ovs-vsctl set bridge brwan other-config:datapath-id=0000000000000001
 $WAN_EXEC ovs-vsctl set-controller brwan tcp:$IPCTRL:6633
+$WAN_EXEC ovs-vsctl set-manager ptcp:6632
 $WAN_EXEC ip link add cpewan type vxlan id 5 remote $IPCPE dstport 8741 dev eth0
 $WAN_EXEC ovs-vsctl add-port brwan cpewan
 $WAN_EXEC ifconfig cpewan up
@@ -124,19 +133,10 @@ curl -X POST -d @json/sdedge$NETNUM/to-voip.json $RYU_ADD_URL
 
 
 
-
-
-## 6. Aplica las reglas de QoS
-echo "## 6. Aplica las reglas de QoS"
-# $CTRL_EXEC chmod 666 /var/run/openvswitch/db.sock
-# sudo chmod 666 /var/run/openvswitch/db.sock
-# CONF_OVSDB="http://$IPCTRL:8080/v1.0/conf/switches/0000000000000003/ovsdb_addr"
+## 6. Qos
+echo "## Applying QoS rules"
 ACC_DPID=0000000000000003
-curl -X PUT -d '"tcp:127.0.0.1:6632"' http://$IPCTRL:8080/v1.0/conf/switches/$ACC_DPID/ovsdb_addr
+curl -X PUT -d "\"tcp:$IPACC:6632\"" http://$IPCTRL:8080/v1.0/conf/switches/$ACC_DPID/ovsdb_addr
 curl -X POST -d @json/to-voip-gw-qos.json http://$IPCTRL:8080/qos/rules/$ACC_DPID
-curl -X POST -d @json/qos-rules-b.json http://$IPCTRL:8080/qos/queue/$ACC_DPID
+curl -X POST -d @json/qos-rule-b.json http://$IPCTRL:8080/qos/queue/$ACC_DPID
 
-
-echo "--"
-echo "sdedge$NETNUM: Abrir Firefox para ver sus flujos Openflow:"
-echo "firefox http://localhost:$PORTCTRL/home/ &"

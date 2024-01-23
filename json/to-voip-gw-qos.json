@@ -1,11 +1,9 @@
 {
     "match": {
-        "priority": 1,
         "dl_type": "IPv4",
         "nw_dst": "10.20.0.254",
         "nw_proto": "UDP",
-        "udp_dst": "5005",
-        "tcp_dst": "5005"
+        "udp_dst": "5005"
     },
     "actions": {
         "queue": "1"

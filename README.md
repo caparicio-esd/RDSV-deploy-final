@@ -31,7 +31,7 @@ En este punto ya esta desplegado el entorno
 ### 04. Hacemos modificacion de entorno VNX - y levantamos VNX
 Importante, antes hacer modificaciones en vnx rootfs
 ``` bash
-vnx --modify-rootfs /usr/share/vnx/filesystems/vnx_rootfs_lxc_ubuntu64-20.04-v025-vnxlab/
+sudo vnx --modify-rootfs /usr/share/vnx/filesystems/vnx_rootfs_lxc_ubuntu64-20.04-v025-vnxlab/
 ```
 Sale una consola de modificacion del filesystem de arranque de vnx. En esta consola: 
 ``` bash

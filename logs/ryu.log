@@ -1,8 +1,8 @@
-loading app /root/flowmanager/flowmanager.py
+loading app flowmanager/flowmanager.py
 loading app ryu.app.rest_conf_switch
 loading app ryu.app.ofctl_rest
 loading app ryu.app.rest_qos
-loading app /root/qos_simple_switch_13.py
+loading app qos_simple_switch_13.py
 loading app ryu.topology.switches
 loading app ryu.controller.ofp_handler
 instantiating app None of DPSet
@@ -11,117 +11,32 @@ creating context wsgi
 instantiating app None of ConfSwitchSet
 creating context conf_switch
 instantiating app ryu.app.rest_conf_switch of ConfSwitchAPI
+instantiating app qos_simple_switch_13.py of SimpleSwitch13
 instantiating app ryu.controller.ofp_handler of OFPHandler
 instantiating app ryu.app.rest_qos of RestQoSAPI
-instantiating app /root/qos_simple_switch_13.py of SimpleSwitch13
-instantiating app /root/flowmanager/flowmanager.py of FlowManager
+instantiating app flowmanager/flowmanager.py of FlowManager
 Created flowmanager
-instantiating app ryu.app.ofctl_rest of RestStatsApi
 instantiating app ryu.topology.switches of Switches
-(79) wsgi starting up on http://0.0.0.0:8080
+instantiating app ryu.app.ofctl_rest of RestStatsApi
+(80) wsgi starting up on http://0.0.0.0:8080
+[QoS][INFO] dpid=0000000000000003: Join qos switch.
 [QoS][INFO] dpid=0000000000000002: Join qos switch.
 [QoS][INFO] dpid=0000000000000001: Join qos switch.
-(79) accepted ('10.0.1.1', 21033)
-10.0.1.1 - - [21/Jan/2024 18:59:54] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.006074
-(79) accepted ('10.0.1.1', 8356)
-10.0.1.1 - - [21/Jan/2024 18:59:54] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.000341
-(79) accepted ('10.0.1.1', 34986)
-10.0.1.1 - - [21/Jan/2024 18:59:54] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.000477
-(79) accepted ('10.0.1.1', 43663)
-10.0.1.1 - - [21/Jan/2024 18:59:54] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.000286
-(79) accepted ('10.0.1.1', 11877)
-10.0.1.1 - - [21/Jan/2024 18:59:54] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.000339
-(79) accepted ('10.0.1.1', 60526)
-10.0.1.1 - - [21/Jan/2024 18:59:54] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.000375
-[QoS][INFO] dpid=0000000000000002: Leave qos switch.
-[QoS][INFO] dpid=0000000000000001: Leave qos switch.
-command terminated with exit code 137
-] "GET /home/css/style.css?v2 HTTP/1.1" 200 4550 0.000604
-(80) accepted ('10.0.1.1', 29524)
-10.0.1.1 - - [21/Jan/2024 19:01:11] "GET /home/css/cards.css?v2 HTTP/1.1" 200 2652 0.000388
-10.0.1.1 - - [21/Jan/2024 19:01:11] "GET /home/css/table.css?v2 HTTP/1.1" 200 2582 0.000287
-10.0.1.1 - - [21/Jan/2024 19:01:11] "GET /home/css/menu.css?v2 HTTP/1.1" 200 1688 0.000299
-10.0.1.1 - - [21/Jan/2024 19:01:11] "GET /home/js/jquery-3.5.0.min.js HTTP/1.1" 200 89634 0.001760
-10.0.1.1 - - [21/Jan/2024 19:01:11] "GET /home/js/main.js?v2 HTTP/1.1" 200 2915 0.000861
-10.0.1.1 - - [21/Jan/2024 19:01:11] "GET /home/js/modules.js?v2 HTTP/1.1" 200 6651 0.000384
-10.0.1.1 - - [21/Jan/2024 19:01:11] "GET /home/js/cards.js?v2 HTTP/1.1" 200 3938 0.000550
-10.0.1.1 - - [21/Jan/2024 19:01:11] "GET /home/js/mainmenu.js HTTP/1.1" 200 1986 0.000337
-10.0.1.1 - - [21/Jan/2024 19:01:11] "GET /home/css/colors.css HTTP/1.1" 200 1289 0.000492
-10.0.1.1 - - [21/Jan/2024 19:01:11] "GET /home/img/favicon.ico HTTP/1.1" 200 10371 0.000762
-10.0.1.1 - - [21/Jan/2024 19:01:11] "GET /home/img/switch.svg HTTP/1.1" 200 2219 0.000341
-10.0.1.1 - - [21/Jan/2024 19:01:11] "GET /data?list=switches HTTP/1.1" 200 177 0.000298
-10.0.1.1 - - [21/Jan/2024 19:01:11] "GET /data?switchdesc=1 HTTP/1.1" 200 279 0.000777
-10.0.1.1 - - [21/Jan/2024 19:01:11] "GET /data?portdesc=1 HTTP/1.1" 200 813 0.000865
-10.0.1.1 - - [21/Jan/2024 19:01:11] "GET /data?portstat=1 HTTP/1.1" 200 1145 0.001005
-10.0.1.1 - - [21/Jan/2024 19:01:11] "GET /data?flowsumm=1 HTTP/1.1" 200 224 0.000634
-10.0.1.1 - - [21/Jan/2024 19:01:11] "GET /data?tablestat=1 HTTP/1.1" 200 17592 0.031656
-10.0.1.1 - - [21/Jan/2024 19:01:13] "GET /home/index.html HTTP/1.1" 200 1162 0.000325
-10.0.1.1 - - [21/Jan/2024 19:01:13] "GET /home/css/style.css?v2 HTTP/1.1" 200 4550 0.000263
-10.0.1.1 - - [21/Jan/2024 19:01:13] "GET /home/css/cards.css?v2 HTTP/1.1" 200 2652 0.000348
-10.0.1.1 - - [21/Jan/2024 19:01:13] "GET /home/css/table.css?v2 HTTP/1.1" 200 2582 0.000250
-10.0.1.1 - - [21/Jan/2024 19:01:13] "GET /home/css/menu.css?v2 HTTP/1.1" 200 1688 0.000230
-10.0.1.1 - - [21/Jan/2024 19:01:13] "GET /home/js/jquery-3.5.0.min.js HTTP/1.1" 200 89634 0.000275
-10.0.1.1 - - [21/Jan/2024 19:01:13] "GET /home/js/main.js?v2 HTTP/1.1" 200 2915 0.000174
-10.0.1.1 - - [21/Jan/2024 19:01:13] "GET /home/js/modules.js?v2 HTTP/1.1" 200 6651 0.000187
-10.0.1.1 - - [21/Jan/2024 19:01:13] "GET /home/js/cards.js?v2 HTTP/1.1" 200 3938 0.000134
-10.0.1.1 - - [21/Jan/2024 19:01:13] "GET /home/js/mainmenu.js HTTP/1.1" 200 1986 0.000133
-10.0.1.1 - - [21/Jan/2024 19:01:13] "GET /home/css/colors.css HTTP/1.1" 200 1289 0.000326
-10.0.1.1 - - [21/Jan/2024 19:01:13] "GET /home/img/switch.svg HTTP/1.1" 200 2219 0.000286
-10.0.1.1 - - [21/Jan/2024 19:01:13] "GET /data?list=switches HTTP/1.1" 200 177 0.000220
-10.0.1.1 - - [21/Jan/2024 19:01:13] "GET /data?switchdesc=1 HTTP/1.1" 200 279 0.000750
-10.0.1.1 - - [21/Jan/2024 19:01:13] "GET /data?portdesc=1 HTTP/1.1" 200 813 0.000823
-10.0.1.1 - - [21/Jan/2024 19:01:13] "GET /data?portstat=1 HTTP/1.1" 200 1145 0.001028
-10.0.1.1 - - [21/Jan/2024 19:01:13] "GET /data?flowsumm=1 HTTP/1.1" 200 224 0.000478
-10.0.1.1 - - [21/Jan/2024 19:01:13] "GET /data?tablestat=1 HTTP/1.1" 200 17592 0.023847
-10.0.1.1 - - [21/Jan/2024 19:01:15] "GET /home/flows.html HTTP/1.1" 200 1340 0.000505
-10.0.1.1 - - [21/Jan/2024 19:01:15] "GET /home/css/style.css?v2 HTTP/1.1" 200 4550 0.000238
-10.0.1.1 - - [21/Jan/2024 19:01:15] "GET /home/css/table.css?v2 HTTP/1.1" 200 2582 0.000145
-10.0.1.1 - - [21/Jan/2024 19:01:15] "GET /home/css/frames.css?v1 HTTP/1.1" 200 3805 0.000504
-10.0.1.1 - - [21/Jan/2024 19:01:15] "GET /home/css/tabs.css?v1 HTTP/1.1" 200 1694 0.000321
-10.0.1.1 - - [21/Jan/2024 19:01:15] "GET /home/css/menu.css?v2 HTTP/1.1" 200 1688 0.000144
-10.0.1.1 - - [21/Jan/2024 19:01:15] "GET /home/js/jquery-3.5.0.min.js HTTP/1.1" 200 89634 0.000224
-10.0.1.1 - - [21/Jan/2024 19:01:15] "GET /home/js/mainmenu.js HTTP/1.1" 200 1986 0.000263
-(80) accepted ('10.0.1.1', 12607)
-10.0.1.1 - - [21/Jan/2024 19:01:15] "GET /home/js/common.js?v2 HTTP/1.1" 200 23999 0.000518
-10.0.1.1 - - [21/Jan/2024 19:01:15] "GET /home/js/flowtables.js?v2 HTTP/1.1" 200 3754 0.000420
-10.0.1.1 - - [21/Jan/2024 19:01:15] "GET /home/css/colors.css HTTP/1.1" 200 1289 0.000292
-10.0.1.1 - - [21/Jan/2024 19:01:15] "GET /home/img/switch.svg HTTP/1.1" 200 2219 0.000294
-10.0.1.1 - - [21/Jan/2024 19:01:15] "GET /data?list=switches HTTP/1.1" 200 177 0.000275
-10.0.1.1 - - [21/Jan/2024 19:01:15] "GET /status?status=flows&dpid=1 HTTP/1.1" 200 2060 0.002776
-10.0.1.1 - - [21/Jan/2024 19:01:15] "GET /status?status=flows&dpid=2 HTTP/1.1" 200 1155 0.002148
-10.0.1.1 - - [21/Jan/2024 19:01:15] "GET /home/img/all_icons.svg HTTP/1.1" 200 3671 0.000518
-10.0.1.1 - - [21/Jan/2024 19:01:21] "GET /home/groups.html HTTP/1.1" 200 1119 0.000441
-10.0.1.1 - - [21/Jan/2024 19:01:21] "GET /home/css/style.css?v2 HTTP/1.1" 200 4550 0.000244
-10.0.1.1 - - [21/Jan/2024 19:01:21] "GET /home/css/table.css?v2 HTTP/1.1" 200 2582 0.000353
-10.0.1.1 - - [21/Jan/2024 19:01:21] "GET /home/css/frames.css?v1 HTTP/1.1" 200 3805 0.000223
-10.0.1.1 - - [21/Jan/2024 19:01:21] "GET /home/css/tabs.css?v1 HTTP/1.1" 200 1694 0.000227
-10.0.1.1 - - [21/Jan/2024 19:01:21] "GET /home/css/menu.css?v2 HTTP/1.1" 200 1688 0.000210
-10.0.1.1 - - [21/Jan/2024 19:01:21] "GET /home/js/jquery-3.5.0.min.js HTTP/1.1" 200 89634 0.000207
-10.0.1.1 - - [21/Jan/2024 19:01:21] "GET /home/js/mainmenu.js HTTP/1.1" 200 1986 0.000181
-10.0.1.1 - - [21/Jan/2024 19:01:21] "GET /home/js/common.js?v1 HTTP/1.1" 200 23999 0.000273
-10.0.1.1 - - [21/Jan/2024 19:01:21] "GET /home/js/grouptables.js?v1 HTTP/1.1" 200 4774 0.000786
-10.0.1.1 - - [21/Jan/2024 19:01:21] "GET /home/css/colors.css HTTP/1.1" 200 1289 0.000283
-10.0.1.1 - - [21/Jan/2024 19:01:21] "GET /home/img/switch.svg HTTP/1.1" 200 2219 0.000311
-10.0.1.1 - - [21/Jan/2024 19:01:21] "GET /data?list=switches HTTP/1.1" 200 177 0.000224
-10.0.1.1 - - [21/Jan/2024 19:01:21] "GET /status?status=groups&dpid=1 HTTP/1.1" 200 198 0.001151
-10.0.1.1 - - [21/Jan/2024 19:01:21] "GET /status?status=groups&dpid=2 HTTP/1.1" 200 198 0.000775
-10.0.1.1 - - [21/Jan/2024 19:01:22] "GET /home/flows.html HTTP/1.1" 200 1340 0.000353
-10.0.1.1 - - [21/Jan/2024 19:01:22] "GET /home/css/style.css?v2 HTTP/1.1" 200 4550 0.000362
-10.0.1.1 - - [21/Jan/2024 19:01:22] "GET /home/css/table.css?v2 HTTP/1.1" 200 2582 0.000182
-10.0.1.1 - - [21/Jan/2024 19:01:22] "GET /home/css/frames.css?v1 HTTP/1.1" 200 3805 0.000245
-10.0.1.1 - - [21/Jan/2024 19:01:22] "GET /home/css/tabs.css?v1 HTTP/1.1" 200 1694 0.000177
-10.0.1.1 - - [21/Jan/2024 19:01:22] "GET /home/css/menu.css?v2 HTTP/1.1" 200 1688 0.000144
-10.0.1.1 - - [21/Jan/2024 19:01:22] "GET /home/js/jquery-3.5.0.min.js HTTP/1.1" 200 89634 0.000260
-10.0.1.1 - - [21/Jan/2024 19:01:22] "GET /home/js/mainmenu.js HTTP/1.1" 200 1986 0.000164
-10.0.1.1 - - [21/Jan/2024 19:01:22] "GET /home/js/common.js?v2 HTTP/1.1" 200 23999 0.000213
-10.0.1.1 - - [21/Jan/2024 19:01:22] "GET /home/js/flowtables.js?v2 HTTP/1.1" 200 3754 0.000151
-10.0.1.1 - - [21/Jan/2024 19:01:22] "GET /home/css/colors.css HTTP/1.1" 200 1289 0.000265
-10.0.1.1 - - [21/Jan/2024 19:01:22] "GET /home/img/favicon.ico HTTP/1.1" 200 10371 0.000254
-10.0.1.1 - - [21/Jan/2024 19:01:22] "GET /home/img/switch.svg HTTP/1.1" 200 2219 0.000200
-10.0.1.1 - - [21/Jan/2024 19:01:22] "GET /data?list=switches HTTP/1.1" 200 177 0.000304
-10.0.1.1 - - [21/Jan/2024 19:01:22] "GET /status?status=flows&dpid=1 HTTP/1.1" 200 2066 0.002657
-10.0.1.1 - - [21/Jan/2024 19:01:22] "GET /status?status=flows&dpid=2 HTTP/1.1" 200 1155 0.001529
-10.0.1.1 - - [21/Jan/2024 19:01:22] "GET /home/img/all_icons.svg HTTP/1.1" 200 3671 0.000351
-[QoS][INFO] dpid=0000000000000002: Leave qos switch.
-[QoS][INFO] dpid=0000000000000001: Leave qos switch.
-command terminated with exit code 137
+(80) accepted ('10.0.1.1', 28111)
+10.0.1.1 - - [23/Jan/2024 22:13:59] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.028492
+(80) accepted ('10.0.1.1', 24584)
+10.0.1.1 - - [23/Jan/2024 22:13:59] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.000744
+(80) accepted ('10.0.1.1', 17545)
+10.0.1.1 - - [23/Jan/2024 22:13:59] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.000984
+(80) accepted ('10.0.1.1', 46900)
+10.0.1.1 - - [23/Jan/2024 22:13:59] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.000991
+(80) accepted ('10.0.1.1', 39429)
+10.0.1.1 - - [23/Jan/2024 22:13:59] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.000857
+(80) accepted ('10.0.1.1', 29259)
+10.0.1.1 - - [23/Jan/2024 22:13:59] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.000904
+(80) accepted ('10.0.1.1', 40762)
+10.0.1.1 - - [23/Jan/2024 22:14:00] "PUT /v1.0/conf/switches/0000000000000003/ovsdb_addr HTTP/1.1" 201 120 0.000402
+(80) accepted ('10.0.1.1', 40776)
+10.0.1.1 - - [23/Jan/2024 22:14:00] "POST /qos/rules/0000000000000003 HTTP/1.1" 200 223 0.000808
+(80) accepted ('10.0.1.1', 40790)
+10.0.1.1 - - [23/Jan/2024 22:14:00] "POST /qos/queue/0000000000000003 HTTP/1.1" 200 239 0.052706
