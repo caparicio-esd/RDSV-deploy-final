@@ -18,25 +18,25 @@ instantiating app flowmanager/flowmanager.py of FlowManager
 Created flowmanager
 instantiating app ryu.topology.switches of Switches
 instantiating app ryu.app.ofctl_rest of RestStatsApi
-(80) wsgi starting up on http://0.0.0.0:8080
+(79) wsgi starting up on http://0.0.0.0:8080
 [QoS][INFO] dpid=0000000000000003: Join qos switch.
 [QoS][INFO] dpid=0000000000000002: Join qos switch.
 [QoS][INFO] dpid=0000000000000001: Join qos switch.
-(80) accepted ('10.0.1.1', 28111)
-10.0.1.1 - - [23/Jan/2024 22:13:59] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.028492
-(80) accepted ('10.0.1.1', 24584)
-10.0.1.1 - - [23/Jan/2024 22:13:59] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.000744
-(80) accepted ('10.0.1.1', 17545)
-10.0.1.1 - - [23/Jan/2024 22:13:59] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.000984
-(80) accepted ('10.0.1.1', 46900)
-10.0.1.1 - - [23/Jan/2024 22:13:59] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.000991
-(80) accepted ('10.0.1.1', 39429)
-10.0.1.1 - - [23/Jan/2024 22:13:59] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.000857
-(80) accepted ('10.0.1.1', 29259)
-10.0.1.1 - - [23/Jan/2024 22:13:59] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.000904
-(80) accepted ('10.0.1.1', 40762)
-10.0.1.1 - - [23/Jan/2024 22:14:00] "PUT /v1.0/conf/switches/0000000000000003/ovsdb_addr HTTP/1.1" 201 120 0.000402
-(80) accepted ('10.0.1.1', 40776)
-10.0.1.1 - - [23/Jan/2024 22:14:00] "POST /qos/rules/0000000000000003 HTTP/1.1" 200 223 0.000808
-(80) accepted ('10.0.1.1', 40790)
-10.0.1.1 - - [23/Jan/2024 22:14:00] "POST /qos/queue/0000000000000003 HTTP/1.1" 200 239 0.052706
+(79) accepted ('10.0.1.1', 30876)
+10.0.1.1 - - [24/Jan/2024 12:57:20] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.045474
+(79) accepted ('10.0.1.1', 34799)
+10.0.1.1 - - [24/Jan/2024 12:57:20] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.000792
+(79) accepted ('10.0.1.1', 60953)
+10.0.1.1 - - [24/Jan/2024 12:57:20] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.001333
+(79) accepted ('10.0.1.1', 34050)
+10.0.1.1 - - [24/Jan/2024 12:57:20] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.000943
+(79) accepted ('10.0.1.1', 17431)
+10.0.1.1 - - [24/Jan/2024 12:57:20] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.001106
+(79) accepted ('10.0.1.1', 52134)
+10.0.1.1 - - [24/Jan/2024 12:57:20] "POST /stats/flowentry/add HTTP/1.1" 200 115 0.001184
+(79) accepted ('10.0.1.1', 55106)
+10.0.1.1 - - [24/Jan/2024 12:57:20] "PUT /v1.0/conf/switches/0000000000000003/ovsdb_addr HTTP/1.1" 201 120 0.000706
+[QoS][INFO] dpid=0000000000000003: Leave qos switch.
+[QoS][INFO] dpid=0000000000000002: Leave qos switch.
+[QoS][INFO] dpid=0000000000000001: Leave qos switch.
+command terminated with exit code 137

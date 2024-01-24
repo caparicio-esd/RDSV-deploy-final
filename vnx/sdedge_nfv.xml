@@ -124,10 +124,12 @@ Changelog: Editado por Carlos Aparicio, Manfredonio Nguema, Enzo Banchon
     <!-- add arpwatch info -->
     <exec seq="on_boot" type="verbatim">
        # arpwatch
-       arpwatch -i eth1 -m carlosapariciodes@gmail.com
-       arpwatch -i eth2 -m carlosapariciodes@gmail.com
-       arpwatch -i eth3 -m carlosapariciodes@gmail.com
-       arpwatch -i lo -m carlosapariciodes@gmail.com
+        systemctl enable arpwatch
+        systemctl start arpwatch
+        arpwatch -i eth1 -a -m caparicio@esdmadrid.es
+        arpwatch -i eth2 -a -m caparicio@esdmadrid.es
+        arpwatch -i eth3 -a -m caparicio@esdmadrid.es
+
 
        # Change interfaces MTU
        ifconfig eth1 mtu 1400
@@ -152,10 +154,11 @@ Changelog: Editado por Carlos Aparicio, Manfredonio Nguema, Enzo Banchon
     <!-- add arpwatch info -->
     <exec seq="on_boot" type="verbatim">
        # arpwatch
-       arpwatch -i eth1 -m carlosapariciodes@gmail.com
-       arpwatch -i eth2 -m carlosapariciodes@gmail.com
-       arpwatch -i eth3 -m carlosapariciodes@gmail.com
-       arpwatch -i lo -m carlosapariciodes@gmail.com
+       systemctl enable arpwatch
+       systemctl start arpwatch
+       arpwatch -i eth1 -a -m caparicio@esdmadrid.es
+       arpwatch -i eth2 -a -m caparicio@esdmadrid.es
+       arpwatch -i eth3 -a -m caparicio@esdmadrid.es
 
        # Change interfaces MTU
        ifconfig eth1 mtu 1400

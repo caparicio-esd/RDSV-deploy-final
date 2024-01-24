@@ -137,6 +137,9 @@ curl -X POST -d @json/sdedge$NETNUM/to-voip.json $RYU_ADD_URL
 echo "## Applying QoS rules"
 ACC_DPID=0000000000000003
 curl -X PUT -d "\"tcp:$IPACC:6632\"" http://$IPCTRL:8080/v1.0/conf/switches/$ACC_DPID/ovsdb_addr
+sleep 2
 curl -X POST -d @json/to-voip-gw-qos.json http://$IPCTRL:8080/qos/rules/$ACC_DPID
+sleep 2
 curl -X POST -d @json/qos-rule-b.json http://$IPCTRL:8080/qos/queue/$ACC_DPID
+sleep 2
 
